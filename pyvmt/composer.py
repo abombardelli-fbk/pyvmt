@@ -55,8 +55,9 @@ def compose(model_a, model_b):
 
     for model in (model_a, model_b):
         for state_var in model.get_state_vars():
-            new_model.add_state_var(state_var)
-            all_state_variables.add(state_var)
+            if not new_model._is_declared(state_var):
+                new_model.add_state_var(state_var)
+                all_state_variables.add(state_var)
 
         # the inputs must be added after computing the actual
         # set of inputs by removing state variables
